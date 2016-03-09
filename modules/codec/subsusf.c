@@ -996,8 +996,6 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
             	psz_end = strstr (psz_subtitle,"/>")+2;
 
 
-
-
             	if( psz_shape_x && psz_shape_y && psz_shape_width && psz_shape_height)
 				{
 
@@ -1028,107 +1026,6 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
 					p_region_upto = p_region_upto->p_next;
 				}
 
-//            	subpicture_region_t *p_shape_region;
-//
-//
-//				psz_end = strstr (psz_subtitle,"/>")+2;
-//
-//				p_shape_region = CreateTextRegion( p_dec,
-//												  psz_subtitle,
-//												  psz_end - psz_subtitle,
-//												  p_sys->i_align );
-//
-//				if( p_shape_region )
-//				{
-//					free( p_shape_region->p_text->psz_text );
-//
-////					p_shape_region->p_text->psz_text = CreateSVGText("<svg height=\"100\" width=\"100\"><text x=\"0\" y=\"15\" fill=\"red\">I love SVG!</text></svg>");
-//					p_shape_region->p_text->psz_text = CreateSVGText("<text x=\"0\" y=\"15\" fill=\"red\">I love SVG!</text>");
-//
-//				}
-//
-//				if( !p_region_first )
-//				{
-//					p_region_first = p_region_upto = p_shape_region;
-//				}
-//				else if( p_shape_region )
-//				{
-//					p_region_upto->p_next = p_shape_region;
-//					p_region_upto = p_region_upto->p_next;
-//				}
-//
-//				if( psz_end ) psz_end += strcspn( psz_end, ">" ) + 1;
-
-
-
-//				subpicture_region_t  *p_shape_region;
-//				char *psz_shape_type = GrabAttributeValue("type", psz_subtitle );
-//				char *psz_shape_x = GrabAttributeValue("posx", psz_subtitle );
-//				char *psz_shape_y = GrabAttributeValue("posy",psz_subtitle);
-//				char *psz_shape_width = GrabAttributeValue("width", psz_subtitle );
-//				char *psz_shape_height = GrabAttributeValue("height", psz_subtitle );
-//
-//				psz_end = strstr (psz_subtitle,"/>")+2;
-//
-//				if(psz_shape_x && psz_shape_y && psz_shape_width && psz_shape_height){
-//					double x = strtod(psz_shape_x,NULL);
-//					double y = strtod(psz_shape_y,NULL);
-//					double width = strtod(psz_shape_width,NULL);
-//					double height = strtod(psz_shape_height,NULL);
-//					printf("%s X: %f Y: %f width: %f height: %f \n",psz_shape_type,x,y,width,height); //debug output
-//
-//
-//					//hier muss das gemalt werden... (PFA)
-//
-//				}
-//
-//				subpicture_region_t  *p_text_region;
-//
-//				psz_end = strstr (psz_subtitle,"</text>")+7;
-//
-//				p_text_region = CreateTextRegion( p_dec,
-//												  psz_subtitle,
-//												  psz_end - psz_subtitle,
-//												  p_sys->i_align );
-//
-//				if( p_text_region )
-//				{
-//					free( p_text_region->p_text->psz_text );
-//					p_text_region->p_text->psz_text = CreatePlainText( psz_subtitle );
-//				}
-//
-//				if( !p_region_first )
-//				{
-//					p_region_first = p_region_upto = p_text_region;
-//				}
-//				else if( p_text_region )
-//				{
-//					p_region_upto->p_next = p_text_region;
-//					p_region_upto = p_region_upto->p_next;
-//				}
-//
-//				if(psz_end)
-//					psz_subtitle = psz_end;
-              //debug output
-      /*        p_shape_region = CreateTextRegion( p_dec,
-                                                psz_shape_type,
-                                                strlen(psz_shape_type),
-                                                SUBPICTURE_ALIGN_LEFT );
-              if( p_shape_region )
-              {
-                  free( p_shape_region->p_text->psz_text );
-                  p_shape_region->p_text->psz_text = CreatePlainText( psz_shape_width );
-              }
-              if( !p_region_first )
-              {
-                  p_region_first = p_region_upto = p_shape_region;
-              }
-              else if( p_shape_region )
-              {
-                  p_region_upto->p_next = p_shape_region;
-                  p_region_upto = p_region_upto->p_next;
-              }
-              //end debug output*/
 
             }
 
