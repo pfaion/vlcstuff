@@ -80,15 +80,15 @@ build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
 check_PROGRAMS = test_strnstr$(EXEEXT)
 subdir = compat
-DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am setenv.c \
-	strverscmp.c getdelim.c strnstr.c flockfile.c strndup.c \
-	fdopendir.c nrand48.c strcasestr.c fsync.c recvmsg.c strtoll.c \
-	dirfd.c localtime_r.c strtok_r.c gmtime_r.c getpid.c \
-	inet_pton.c vasprintf.c gettimeofday.c timespec_get.c swab.c \
-	strcasecmp.c asprintf.c strsep.c freeaddrinfo.c atof.c lldiv.c \
-	poll.c rewind.c gai_strerror.c strtof.c strlcpy.c ffsll.c \
-	strnlen.c tdestroy.c sendmsg.c timegm.c atoll.c strdup.c \
-	posix_memalign.c $(top_srcdir)/autotools/depcomp \
+DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am tdestroy.c \
+	gai_strerror.c strsep.c freeaddrinfo.c nrand48.c strdup.c \
+	timegm.c atof.c strtok_r.c getpid.c strcasecmp.c strlcpy.c \
+	gmtime_r.c gettimeofday.c fdopendir.c dirfd.c lldiv.c atoll.c \
+	rewind.c posix_memalign.c strndup.c vasprintf.c strnstr.c \
+	getdelim.c inet_pton.c fsync.c strtof.c strcasestr.c strtoll.c \
+	flockfile.c sendmsg.c poll.c strnlen.c localtime_r.c ffsll.c \
+	strverscmp.c asprintf.c swab.c timespec_get.c setenv.c \
+	recvmsg.c $(top_srcdir)/autotools/depcomp \
 	$(top_srcdir)/autotools/test-driver
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/c11.m4 $(top_srcdir)/m4/dolt.m4 \
@@ -386,7 +386,7 @@ TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/autotools/test-driver
 TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 	$(TEST_LOG_FLAGS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/pfaion/work/vlc/autotools/missing aclocal-1.14
+ACLOCAL = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing aclocal-1.14
 ALIASES =  cvlc rvlc qvlc svlc nvlc
 ALSA_CFLAGS = -I/usr/include/alsa  
 ALSA_LIBS = -lasound  
@@ -406,9 +406,9 @@ AS = as
 ASDCP_CFLAGS = 
 ASDCP_LIBS = 
 ASM = 
-AUTOCONF = ${SHELL} /home/pfaion/work/vlc/autotools/missing autoconf
-AUTOHEADER = ${SHELL} /home/pfaion/work/vlc/autotools/missing autoheader
-AUTOMAKE = ${SHELL} /home/pfaion/work/vlc/autotools/missing automake-1.14
+AUTOCONF = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing autoconf
+AUTOHEADER = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing autoheader
+AUTOMAKE = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing automake-1.14
 AVAHI_CFLAGS = -D_REENTRANT  
 AVAHI_LIBS = -lavahi-common -lavahi-client  
 AVCODEC_CFLAGS = 
@@ -913,7 +913,7 @@ MACOSX_DEPLOYMENT_TARGET =
 MAD_CFLAGS = 
 MAD_LIBS =  -lmad
 MAINT = 
-MAKEINFO = ${SHELL} /home/pfaion/work/vlc/autotools/missing makeinfo
+MAKEINFO = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing makeinfo
 MANIFEST_TOOL = :
 MFX_CFLAGS = 
 MFX_LIBS = 
@@ -1102,10 +1102,10 @@ X_LIBS =
 X_PRE_LIBS =  -lSM -lICE
 ZVBI_CFLAGS =  
 ZVBI_LIBS = -lzvbi -lpthread -lm -lpng -lz  
-abs_builddir = /home/pfaion/work/vlc/compat
-abs_srcdir = /home/pfaion/work/vlc/compat
-abs_top_builddir = /home/pfaion/work/vlc
-abs_top_srcdir = /home/pfaion/work/vlc
+abs_builddir = /home/pfaion/git/vlcstuff/compat
+abs_srcdir = /home/pfaion/git/vlcstuff/compat
+abs_top_builddir = /home/pfaion/git/vlcstuff
+abs_top_srcdir = /home/pfaion/git/vlcstuff
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -1137,7 +1137,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/pfaion/work/vlc/autotools/install-sh
+install_sh = ${SHELL} /home/pfaion/git/vlcstuff/autotools/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -1146,7 +1146,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/pfaion/work/vlcinstall
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin

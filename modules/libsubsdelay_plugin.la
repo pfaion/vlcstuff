@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' /home/pfaion/work/vlc/src/libvlccore.la -lidn -lpthread -ldl -lm -ldbus-1'
+dependency_libs=' /home/pfaion/git/vlcstuff/src/libvlccore.la -lidn -lpthread -ldl -lm -ldbus-1'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,5 +38,5 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/pfaion/work/vlcinstall/lib/vlc/plugins/video_filter'
-relink_command="(cd /home/pfaion/work/vlc/modules; /bin/bash /home/pfaion/work/vlc/modules/../libtool  --silent --tag CC --mode=relink gcc -std=gnu99 -g -O2 -Wall -Wextra -Wsign-compare -Wundef -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Wmissing-prototypes -Wvolatile-register-var -Werror-implicit-function-declaration -Winit-self -Wlogical-op -Wformat-security -pipe -fvisibility=hidden -O3 -ffast-math -funroll-loops -fomit-frame-pointer -avoid-version -module -export-symbols-regex \"^vlc_entry\" -shrext .so -no-undefined ../compat/libcompat.la ../src/libvlccore.la -o libsubsdelay_plugin.la -rpath /home/pfaion/work/vlcinstall/lib/vlc/plugins/video_filter video_filter/subsdelay.lo @inst_prefix_dir@)"
+libdir='/usr/local/lib/vlc/plugins/video_filter'
+relink_command="(cd /home/pfaion/git/vlcstuff/modules; /bin/bash /home/pfaion/git/vlcstuff/modules/../libtool  --silent --tag CC --mode=relink gcc -std=gnu99 -g -O2 -Wall -Wextra -Wsign-compare -Wundef -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Wmissing-prototypes -Wvolatile-register-var -Werror-implicit-function-declaration -Winit-self -Wlogical-op -Wformat-security -pipe -fvisibility=hidden -O3 -ffast-math -funroll-loops -fomit-frame-pointer -avoid-version -module -export-symbols-regex \"^vlc_entry\" -shrext .so -no-undefined ../compat/libcompat.la ../src/libvlccore.la -o libsubsdelay_plugin.la -rpath /usr/local/lib/vlc/plugins/video_filter video_filter/subsdelay.lo @inst_prefix_dir@)"

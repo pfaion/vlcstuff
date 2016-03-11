@@ -99,8 +99,8 @@ DIST_COMMON = $(srcdir)/extras/package/macosx/package.mak \
 	$(top_srcdir)/extras/package/macosx/Resources/English.lproj/InfoPlist.strings.in \
 	$(dist_noinst_SCRIPTS) $(top_srcdir)/autotools/test-driver \
 	AUTHORS COPYING COPYING.LIB ChangeLog INSTALL NEWS README \
-	THANKS autotools/compile autotools/config.guess \
-	autotools/config.rpath autotools/config.sub \
+	THANKS compile autotools/compile autotools/config.guess \
+	autotools/config.rpath autotools/config.sub autotools/depcomp \
 	autotools/install-sh autotools/missing autotools/ltmain.sh \
 	$(top_srcdir)/autotools/compile \
 	$(top_srcdir)/autotools/config.guess \
@@ -443,7 +443,7 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/pfaion/work/vlc/autotools/missing aclocal-1.14
+ACLOCAL = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing aclocal-1.14
 ALIASES =  cvlc rvlc qvlc svlc nvlc
 ALSA_CFLAGS = -I/usr/include/alsa  
 ALSA_LIBS = -lasound  
@@ -463,9 +463,9 @@ AS = as
 ASDCP_CFLAGS = 
 ASDCP_LIBS = 
 ASM = 
-AUTOCONF = ${SHELL} /home/pfaion/work/vlc/autotools/missing autoconf
-AUTOHEADER = ${SHELL} /home/pfaion/work/vlc/autotools/missing autoheader
-AUTOMAKE = ${SHELL} /home/pfaion/work/vlc/autotools/missing automake-1.14
+AUTOCONF = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing autoconf
+AUTOHEADER = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing autoheader
+AUTOMAKE = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing automake-1.14
 AVAHI_CFLAGS = -D_REENTRANT  
 AVAHI_LIBS = -lavahi-common -lavahi-client  
 AVCODEC_CFLAGS = 
@@ -970,7 +970,7 @@ MACOSX_DEPLOYMENT_TARGET =
 MAD_CFLAGS = 
 MAD_LIBS =  -lmad
 MAINT = 
-MAKEINFO = ${SHELL} /home/pfaion/work/vlc/autotools/missing makeinfo
+MAKEINFO = ${SHELL} /home/pfaion/git/vlcstuff/autotools/missing makeinfo
 MANIFEST_TOOL = :
 MFX_CFLAGS = 
 MFX_LIBS = 
@@ -1159,10 +1159,10 @@ X_LIBS =
 X_PRE_LIBS =  -lSM -lICE
 ZVBI_CFLAGS =  
 ZVBI_LIBS = -lzvbi -lpthread -lm -lpng -lz  
-abs_builddir = /home/pfaion/work/vlc
-abs_srcdir = /home/pfaion/work/vlc
-abs_top_builddir = /home/pfaion/work/vlc
-abs_top_srcdir = /home/pfaion/work/vlc
+abs_builddir = /home/pfaion/git/vlcstuff
+abs_srcdir = /home/pfaion/git/vlcstuff
+abs_top_builddir = /home/pfaion/git/vlcstuff
+abs_top_srcdir = /home/pfaion/git/vlcstuff
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -1194,7 +1194,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/pfaion/work/vlc/autotools/install-sh
+install_sh = ${SHELL} /home/pfaion/git/vlcstuff/autotools/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -1203,7 +1203,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/pfaion/work/vlcinstall
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin

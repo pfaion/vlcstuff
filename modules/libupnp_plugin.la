@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' /home/pfaion/work/vlc/src/libvlccore.la -lidn -lpthread -ldl -ldbus-1 -lupnp -lthreadutil -lixml'
+dependency_libs=' /home/pfaion/git/vlcstuff/src/libvlccore.la -lidn -lpthread -ldl -ldbus-1 -lupnp -lthreadutil -lixml'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,5 +38,5 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/pfaion/work/vlcinstall/lib/vlc/plugins/services_discovery'
-relink_command="(cd /home/pfaion/work/vlc/modules; /bin/bash /home/pfaion/work/vlc/modules/../libtool  --silent --tag CXX --mode=relink g++ -pthread -I/usr/include/upnp -g -O2 -std=c++11 -Wall -Wextra -Wsign-compare -Wundef -Wpointer-arith -Wvolatile-register-var -Wformat-security -fvisibility=hidden -O3 -ffast-math -funroll-loops -fomit-frame-pointer -avoid-version -module -export-symbols-regex \"^vlc_entry\" -shrext .so -no-undefined ../compat/libcompat.la ../src/libvlccore.la -rpath /home/pfaion/work/vlcinstall/lib/vlc/plugins/services_discovery -o libupnp_plugin.la services_discovery/libupnp_plugin_la-upnp.lo -pthread -lupnp -lthreadutil -lixml @inst_prefix_dir@)"
+libdir='/usr/local/lib/vlc/plugins/services_discovery'
+relink_command="(cd /home/pfaion/git/vlcstuff/modules; /bin/bash /home/pfaion/git/vlcstuff/modules/../libtool  --silent --tag CXX --mode=relink g++ -pthread -I/usr/include/upnp -g -O2 -std=c++11 -Wall -Wextra -Wsign-compare -Wundef -Wpointer-arith -Wvolatile-register-var -Wformat-security -fvisibility=hidden -O3 -ffast-math -funroll-loops -fomit-frame-pointer -avoid-version -module -export-symbols-regex \"^vlc_entry\" -shrext .so -no-undefined ../compat/libcompat.la ../src/libvlccore.la -rpath /usr/local/lib/vlc/plugins/services_discovery -o libupnp_plugin.la services_discovery/libupnp_plugin_la-upnp.lo -pthread -lupnp -lthreadutil -lixml @inst_prefix_dir@)"

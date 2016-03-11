@@ -1,2 +1,2 @@
 #! /bin/sh
-exec /home/pfaion/work/vlcinstall/bin/vlc -I "ncurses" "$@"
+exec /usr/local/bin/vlc -I "ncurses" "$@"

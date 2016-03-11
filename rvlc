@@ -1,2 +1,2 @@
 #! /bin/sh
-exec /home/pfaion/work/vlcinstall/bin/vlc -I "rc" "$@"
+exec /usr/local/bin/vlc -I "rc" "$@"

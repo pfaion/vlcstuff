@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' /home/pfaion/work/vlc/src/libvlccore.la -lidn -lpthread -ldl -ldbus-1 -lmatroska -lebml -lz'
+dependency_libs=' /home/pfaion/git/vlcstuff/src/libvlccore.la -lidn -lpthread -ldl -ldbus-1 -lmatroska -lebml -lz'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,5 +38,5 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/pfaion/work/vlcinstall/lib/vlc/plugins/demux'
-relink_command="(cd /home/pfaion/work/vlc/modules; /bin/bash /home/pfaion/work/vlc/modules/../libtool  --silent --tag CXX --mode=relink g++ -g -O2 -std=c++11 -Wall -Wextra -Wsign-compare -Wundef -Wpointer-arith -Wvolatile-register-var -Wformat-security -fvisibility=hidden -O3 -ffast-math -funroll-loops -fomit-frame-pointer -avoid-version -module -export-symbols-regex \"^vlc_entry\" -shrext .so -no-undefined ../compat/libcompat.la ../src/libvlccore.la -rpath /home/pfaion/work/vlcinstall/lib/vlc/plugins/demux -o libmkv_plugin.la demux/mkv/libmkv_plugin_la-util.lo demux/mkv/libmkv_plugin_la-virtual_segment.lo demux/mkv/libmkv_plugin_la-matroska_segment.lo demux/mkv/libmkv_plugin_la-matroska_segment_parse.lo demux/mkv/libmkv_plugin_la-demux.lo demux/mkv/libmkv_plugin_la-Ebml_parser.lo demux/mkv/libmkv_plugin_la-chapters.lo demux/mkv/libmkv_plugin_la-chapter_command.lo demux/mkv/libmkv_plugin_la-stream_io_callback.lo demux/mp4/libmkv_plugin_la-libmp4.lo demux/mkv/libmkv_plugin_la-mkv.lo codec/libmkv_plugin_la-dts_header.lo -lmatroska -lebml -lz @inst_prefix_dir@)"
+libdir='/usr/local/lib/vlc/plugins/demux'
+relink_command="(cd /home/pfaion/git/vlcstuff/modules; /bin/bash /home/pfaion/git/vlcstuff/modules/../libtool  --silent --tag CXX --mode=relink g++ -g -O2 -std=c++11 -Wall -Wextra -Wsign-compare -Wundef -Wpointer-arith -Wvolatile-register-var -Wformat-security -fvisibility=hidden -O3 -ffast-math -funroll-loops -fomit-frame-pointer -avoid-version -module -export-symbols-regex \"^vlc_entry\" -shrext .so -no-undefined ../compat/libcompat.la ../src/libvlccore.la -rpath /usr/local/lib/vlc/plugins/demux -o libmkv_plugin.la demux/mkv/libmkv_plugin_la-util.lo demux/mkv/libmkv_plugin_la-virtual_segment.lo demux/mkv/libmkv_plugin_la-matroska_segment.lo demux/mkv/libmkv_plugin_la-matroska_segment_parse.lo demux/mkv/libmkv_plugin_la-demux.lo demux/mkv/libmkv_plugin_la-Ebml_parser.lo demux/mkv/libmkv_plugin_la-chapters.lo demux/mkv/libmkv_plugin_la-chapter_command.lo demux/mkv/libmkv_plugin_la-stream_io_callback.lo demux/mp4/libmkv_plugin_la-libmp4.lo demux/mkv/libmkv_plugin_la-mkv.lo codec/libmkv_plugin_la-dts_header.lo -lmatroska -lebml -lz @inst_prefix_dir@)"

@@ -59,7 +59,7 @@
 #define CAN_COMPILE_SSSE3 1
 
 /* The ./configure command line */
-#define CONFIGURE_LINE "./configure  '--prefix=/home/pfaion/work/vlcinstall' '--disable-avcodec' '--disable-nfs' '--disable-secret'"
+#define CONFIGURE_LINE "./configure  '--disable-avcodec' '--disable-nfs' '--disable-secret'"
 
 /* Copyright string */
 #define COPYRIGHT_MESSAGE "Copyright © 1996-2016 the VideoLAN team"

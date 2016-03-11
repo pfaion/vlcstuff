@@ -80,15 +80,15 @@ build_triplet = @build@
 host_triplet = @host@
 check_PROGRAMS = test_strnstr$(EXEEXT)
 subdir = compat
-DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am setenv.c \
-	strverscmp.c getdelim.c strnstr.c flockfile.c strndup.c \
-	fdopendir.c nrand48.c strcasestr.c fsync.c recvmsg.c strtoll.c \
-	dirfd.c localtime_r.c strtok_r.c gmtime_r.c getpid.c \
-	inet_pton.c vasprintf.c gettimeofday.c timespec_get.c swab.c \
-	strcasecmp.c asprintf.c strsep.c freeaddrinfo.c atof.c lldiv.c \
-	poll.c rewind.c gai_strerror.c strtof.c strlcpy.c ffsll.c \
-	strnlen.c tdestroy.c sendmsg.c timegm.c atoll.c strdup.c \
-	posix_memalign.c $(top_srcdir)/autotools/depcomp \
+DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am tdestroy.c \
+	gai_strerror.c strsep.c freeaddrinfo.c nrand48.c strdup.c \
+	timegm.c atof.c strtok_r.c getpid.c strcasecmp.c strlcpy.c \
+	gmtime_r.c gettimeofday.c fdopendir.c dirfd.c lldiv.c atoll.c \
+	rewind.c posix_memalign.c strndup.c vasprintf.c strnstr.c \
+	getdelim.c inet_pton.c fsync.c strtof.c strcasestr.c strtoll.c \
+	flockfile.c sendmsg.c poll.c strnlen.c localtime_r.c ffsll.c \
+	strverscmp.c asprintf.c swab.c timespec_get.c setenv.c \
+	recvmsg.c $(top_srcdir)/autotools/depcomp \
 	$(top_srcdir)/autotools/test-driver
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/c11.m4 $(top_srcdir)/m4/dolt.m4 \

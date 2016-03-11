@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' /home/pfaion/work/vlcinstall/lib/libvlccore.la -lidn -lpthread -ldl -lm -ldbus-1 -lgstvideo-1.0 -lgstapp-1.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0'
+dependency_libs=' /usr/local/lib/libvlccore.la -lidn -lpthread -ldl -lm -ldbus-1 -lgstvideo-1.0 -lgstapp-1.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/pfaion/work/vlcinstall/lib/vlc/plugins/codec'
+libdir='/usr/local/lib/vlc/plugins/codec'

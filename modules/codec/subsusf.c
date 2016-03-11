@@ -883,12 +883,33 @@ static void DrawRect(subpicture_region_t *r,
 }
 
 
+struct polydata {
+	int x;
+	int y;
+	struct polydata *next;
+};
+typedef struct polydata polydata;
+
+static void DrawPoly(subpicture_region_t *r, polydata *root) {
+
+	polydata *curr = root;
+	do {
+		printf("point ( %d | %d )/n", curr->x, curr->y);
+		curr = curr->next;
+
+	} while(curr != NULL);
+
+
+}
+
+
 static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
                                             char *psz_subtitle )
 {
     decoder_sys_t        *p_sys = p_dec->p_sys;
     subpicture_region_t  *p_region_first = NULL;
     subpicture_region_t  *p_region_upto  = p_region_first;
+
 
     while( *psz_subtitle )
     {
@@ -978,45 +999,71 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
                     p_region_upto = p_region_upto->p_next;
                 }
             }
-            //start change parsing the shapes
-            else if(( !strncasecmp( psz_subtitle, "<shape ", 7 )) ||
-                    ( !strncasecmp( psz_subtitle, "<shape>", 7 )))
+            //start change parsing the polygons
+            else if(( !strncasecmp( psz_subtitle, "<polygon ", 9 )) ||
+                    ( !strncasecmp( psz_subtitle, "<polygon>", 9 )))
             {
 
+            	// get the end of the current polygon
+            	psz_end = strstr(psz_subtitle,"</polygon>") + 10;
 
 
+            	// initialize stuff
+            	polydata *root = malloc(sizeof(polydata));
+            	root->next = NULL;
+            	polydata *curr = root;
+            	int polyCount = 0;
+
+
+            	// starting position of next point
+            	char *psz_point_start = strstr(psz_subtitle, "<point ");
+
+            	// check if next point is found and in current polygon
+            	while(psz_point_start && psz_point_start < psz_end) {
+
+            		// read attributes of points
+            		char *psz_point_x = GrabAttributeValue("posx", psz_point_start);
+            		char *psz_point_y = GrabAttributeValue("posy", psz_point_start);
+
+            		if(psz_point_x && psz_point_y) {
+
+            			polyCount++;
+
+            			// if not root node: append next
+            			if(polyCount > 1) {
+            				curr->next = malloc(sizeof(polydata));
+            				curr = curr->next;
+            				curr->next = NULL;
+            			}
+
+                		// convert to int
+						int x = (int)(strtol(psz_point_x, NULL, 10));
+						int y = (int)(strtol(psz_point_y, NULL, 10));
+
+						// store data
+						curr->x = x;
+						curr->y = y;
+
+            		}
+
+            		// get end of point and continue the search from there on
+            		char *psz_point_end = strstr(psz_point_start, "/>") + 2;
+            		psz_point_start = strstr(psz_point_end, "<point ");
+
+
+            	}
+
+
+            	// create and draw picture region
             	subpicture_region_t *p_paint_region;
+				int video_width = 1920;
+				int video_height = 1080;
+            	p_paint_region = newPaintRegion(0,0,video_width + 1,video_height + 1);
+            	DrawPoly(p_paint_region, root);
+            	//DrawRect(p_paint_region,0,0,100,100);
 
-
-
-				char *psz_shape_x = GrabAttributeValue("posx", psz_subtitle );
-				char *psz_shape_y = GrabAttributeValue("posy",psz_subtitle);
-				char *psz_shape_width = GrabAttributeValue("width", psz_subtitle );
-				char *psz_shape_height = GrabAttributeValue("height", psz_subtitle );
-            	psz_end = strstr (psz_subtitle,"/>")+2;
-
-
-            	if( psz_shape_x && psz_shape_y && psz_shape_width && psz_shape_height)
-				{
-
-    				int x = (int)(strtod(psz_shape_x,NULL));
-    				int y = (int)(strtod(psz_shape_y,NULL));
-    				int w = (int)(strtod(psz_shape_width,NULL));
-    				int h = (int)(strtod(psz_shape_height,NULL));
-
-    				int video_width = 1920;
-    				int video_height = 1080;
-                	p_paint_region = newPaintRegion(0,0,video_width + 1,video_height + 1);
-
-                	DrawRect(p_paint_region, x,y,x+w,y+h);
-                	free(psz_shape_x);
-                	free(psz_shape_y);
-                	free(psz_shape_width);
-                	free(psz_shape_height);
-
-				}
-
-				if( !p_region_first )
+            	// save picture region in list
+            	if( !p_region_first )
 				{
 					p_region_first = p_region_upto = p_paint_region;
 				}
@@ -1027,6 +1074,12 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
 				}
 
 
+
+            	// free linked list
+            	while((curr = root) != NULL) {
+            		root = root->next;
+            		free(curr);
+            	}
             }
 
             //end shape dummy
