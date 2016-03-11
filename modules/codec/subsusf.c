@@ -890,14 +890,41 @@ struct polydata {
 };
 typedef struct polydata polydata;
 
-static void DrawPoly(subpicture_region_t *r, polydata *root) {
+static int sign(int x) {
+	return (x > 0) - (x < 0);
+}
+
+static void DrawPoly(subpicture_region_t *r, polydata *root)
+{
+	uint8_t *pY    = r->p_picture->p[Y_PLANE].p_pixels;
+	int     pitchY = r->p_picture->p[Y_PLANE].i_pitch;
+
 
 	polydata *curr = root;
 	do {
-		printf("point ( %d | %d )/n", curr->x, curr->y);
-		curr = curr->next;
+		// if end of list, set next to root for closed polygon
+		polydata *next = curr->next == NULL ? root : curr->next;
 
-	} while(curr != NULL);
+		int x0 = curr->x;
+		int y0 = curr->y;
+		int x1 = next->x;
+		int y1 = next->y;
+
+		// bresenham's line algorithm
+		// from http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
+		int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
+		int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1;
+		int err = (dx>dy ? dx : -dy)/2, e2;
+
+		for(;;){
+	        pY[x0 + pitchY * y0] = 1;
+			if (x0==x1 && y0==y1) break;
+			e2 = err;
+			if (e2 >-dx) { err -= dy; x0 += sx; }
+			if (e2 < dy) { err += dx; y0 += sy; }
+		}
+
+	} while((curr = curr->next) != NULL);
 
 
 }
@@ -922,7 +949,11 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
             if(( !strncasecmp( psz_subtitle, "<karaoke ", 9 )) ||
                     ( !strncasecmp( psz_subtitle, "<karaoke>", 9 )))
             {
-                psz_end = strstr (psz_subtitle,"</karaoke>")+10;
+                //psz_end = strstr (psz_subtitle,"</karaoke>")+10;
+                if ((psz_end = strstr (psz_subtitle,"</karaoke>")) != NULL) {
+					 psz_end += 9;
+				}
+
                 if( psz_end )
                 {
                     subpicture_region_t  *p_text_region;
@@ -950,7 +981,11 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
             {
                 subpicture_region_t *p_image_region = NULL;
 
-                psz_end = strstr (psz_subtitle,"</image>")+8;
+                //psz_end = strstr (psz_subtitle,"</image>")+8;
+                if ((psz_end = strstr (psz_subtitle,"</image>")) != NULL) {
+					 psz_end += 7;
+				}
+
                 char *psz_content = strchr( psz_subtitle, '>' );
                 int   i_transparent = -1;
 
@@ -1005,7 +1040,10 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
             {
 
             	// get the end of the current polygon
-            	psz_end = strstr(psz_subtitle,"</polygon>") + 10;
+            	//psz_end = strstr(psz_subtitle,"</polygon>") + 10;
+            	if ((psz_end = strstr (psz_subtitle,"</polygon>")) != NULL) {
+					 psz_end += 9;
+				}
 
 
             	// initialize stuff
@@ -1088,7 +1126,10 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
             {
                 subpicture_region_t  *p_text_region;
 
-                psz_end = strstr (psz_subtitle,"</text>")+7;
+                //psz_end = strstr (psz_subtitle,"</text>")+7;
+                if ((psz_end = strstr (psz_subtitle,"</text>")) != NULL) {
+                     psz_end += 6;
+                }
 
                 p_text_region = CreateTextRegion( p_dec,
                                                   psz_subtitle,
@@ -1112,6 +1153,10 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
                 }
 
 			}
+            else {
+            	msg_Warn( p_dec, "Unknown subtitle line: %s", psz_subtitle );
+            	psz_end = psz_subtitle+1;
+            }
 
 			if(psz_end)
 				psz_subtitle = psz_end;
