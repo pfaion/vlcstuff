@@ -926,6 +926,39 @@ static void DrawPoly(subpicture_region_t *r, polydata *root)
 
 	} while((curr = curr->next) != NULL);
 
+}
+
+static void DrawCircle(subpicture_region_t *r, int x0, int y0, int diameter)
+{
+	uint8_t *pY    = r->p_picture->p[Y_PLANE].p_pixels;
+	int     pitchY = r->p_picture->p[Y_PLANE].i_pitch;
+
+	// bresenham's circle algorithm
+	// slightly optimized from https://de.wikipedia.org/wiki/Bresenham-Algorithmus#Kreisvariante_des_Algorithmus
+	int x = diameter/2;
+	int y = 0;
+	int err = x;
+	while(y <= x) {
+		pY[(x0 + x) + pitchY * (y0 + y)] = 1;
+		pY[(x0 - x) + pitchY * (y0 + y)] = 1;
+		pY[(x0 + x) + pitchY * (y0 - y)] = 1;
+		pY[(x0 - x) + pitchY * (y0 - y)] = 1;
+		pY[(x0 + y) + pitchY * (y0 + x)] = 1;
+		pY[(x0 - y) + pitchY * (y0 + x)] = 1;
+		pY[(x0 + y) + pitchY * (y0 - x)] = 1;
+		pY[(x0 - y) + pitchY * (y0 - x)] = 1;
+		err -= 2*y;
+		err++;
+		y++;
+		if(err < 0) {
+			err--;
+			err += 2*x;
+			x--;
+		}
+	}
+
+
+
 
 }
 
@@ -1034,7 +1067,7 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
                     p_region_upto = p_region_upto->p_next;
                 }
             }
-            //start change parsing the polygons
+            //start parsing the polygons
             else if(( !strncasecmp( psz_subtitle, "<polygon ", 9 )) ||
                     ( !strncasecmp( psz_subtitle, "<polygon>", 9 )))
             {
@@ -1120,7 +1153,96 @@ static subpicture_region_t *ParseUSFString( decoder_t *p_dec,
             	}
             }
 
-            //end shape dummy
+            //start parsing the rectangles
+			else if(( !strncasecmp( psz_subtitle, "<rectangle ", 11 )) ||
+					( !strncasecmp( psz_subtitle, "<rectangle>", 11 )))
+			{
+
+				// get the end of the rectangle
+				if ((psz_end = strstr (psz_subtitle,"/>")) != NULL) {
+					 psz_end += 1;
+				}
+
+				// read attributes of rectangle
+				char *psz_rec_x = GrabAttributeValue("posx", psz_subtitle);
+				char *psz_rec_y = GrabAttributeValue("posy", psz_subtitle);
+				char *psz_rec_width = GrabAttributeValue("width", psz_subtitle);
+				char *psz_rec_height = GrabAttributeValue("height", psz_subtitle);
+
+				if(psz_rec_x && psz_rec_y && psz_rec_width && psz_rec_height) {
+
+					// create and draw picture region
+					subpicture_region_t *p_paint_region;
+					int video_width = 1920;
+					int video_height = 1080;
+					p_paint_region = newPaintRegion(0,0,video_width + 1,video_height + 1);
+
+					// convert to int
+					int x = (int)(strtol(psz_rec_x, NULL, 10));
+					int y = (int)(strtol(psz_rec_y, NULL, 10));
+					int w = (int)(strtol(psz_rec_width, NULL, 10));
+					int h = (int)(strtol(psz_rec_height, NULL, 10));
+
+					DrawRect(p_paint_region,x,y,x+w,y+h);
+
+					// save picture region in list
+					if( !p_region_first )
+					{
+						p_region_first = p_region_upto = p_paint_region;
+					}
+					else if( p_paint_region )
+					{
+						p_region_upto->p_next = p_paint_region;
+						p_region_upto = p_region_upto->p_next;
+					}
+
+				}
+			}
+
+            //start parsing the points
+			else if(( !strncasecmp( psz_subtitle, "<point ", 7 )) ||
+					( !strncasecmp( psz_subtitle, "<point>", 7 )))
+			{
+
+				// get the end of the point
+				if ((psz_end = strstr (psz_subtitle,"/>")) != NULL) {
+					 psz_end += 1;
+				}
+
+				// read attributes of point
+				char *psz_point_x = GrabAttributeValue("posx", psz_subtitle);
+				char *psz_point_y = GrabAttributeValue("posy", psz_subtitle);
+				char *psz_point_d = GrabAttributeValue("diameter", psz_subtitle);
+
+				if(psz_point_x && psz_point_y && psz_point_d) {
+
+					// create and draw picture region
+					subpicture_region_t *p_paint_region;
+					int video_width = 1920;
+					int video_height = 1080;
+					p_paint_region = newPaintRegion(0,0,video_width + 1,video_height + 1);
+
+					// convert to int
+					int x = (int)(strtol(psz_point_x, NULL, 10));
+					int y = (int)(strtol(psz_point_y, NULL, 10));
+					int d = (int)(strtol(psz_point_d, NULL, 10));
+
+					DrawCircle(p_paint_region,x,y,d);
+
+					// save picture region in list
+					if( !p_region_first )
+					{
+						p_region_first = p_region_upto = p_paint_region;
+					}
+					else if( p_paint_region )
+					{
+						p_region_upto->p_next = p_paint_region;
+						p_region_upto = p_region_upto->p_next;
+					}
+
+				}
+			}
+
             else if(( !strncasecmp( psz_subtitle, "<text ", 6 )) ||
                     ( !strncasecmp( psz_subtitle, "<text>", 6 )))
             {
